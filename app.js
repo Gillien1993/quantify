@@ -8,10 +8,26 @@ var bodyParser = require("body-parser");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var config = require('./config');
+
 var app = express();
 
 
+/* -------------------------------------------------------------------------------------------- */
+const mongoose = require('mongoose');
+mongoose.connect(config.DB,{ useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    // we're connected!
+    console.log("YES CONNECTED~~~~~~~~~~~~~~~");
+});
+/* --------------------------------------------------------------------------------------------- */
+
+
 app.set('view engine', 'ejs');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
@@ -38,7 +54,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;

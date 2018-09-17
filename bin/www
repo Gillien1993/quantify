@@ -8,16 +8,11 @@ var app = require('../app');
 var debug = require('debug')('quantify:server');
 var http = require('http');
 const fs = require('fs');
+const config = require('../config');
 
 const readline = require('readline');
 const {google} = require('googleapis');
-const MongoClient = require('mongodb').MongoClient
 
-var db;
-MongoClient.connect('mongodb://YRC:19940617*Lh@ds257732.mlab.com:57732/quantifydb', { useNewUrlParser: true }, (err, client) => {
-    if (err) return console.log(err);
-    db = client.db('quantifydb');
-})
 
 
 // // If modifying these scopes, delete token.json.
@@ -112,7 +107,7 @@ MongoClient.connect('mongodb://YRC:19940617*Lh@ds257732.mlab.com:57732/quantifyd
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.APP_PORT);
 app.set('port', port);
 
 
