@@ -8,7 +8,7 @@ const CompleteStatusEnum = Object.freeze({"incomplete":0, "completed":1, "curren
 // DB Helper: CREATE and UPDATE
 
 // npm install ws@3.3.2 --save-dev --save-exact
-function taskSave(taskObject){
+function taskSave(taskObject, res){
     taskObject.save(function (err, TestTask) {
         if (err) return console.error(err);
         console.log("Task: "+ TestTask.title + " saved.");
@@ -22,7 +22,7 @@ router.post('/addtask', function (req, res) {
     console.log(req.body);
 
     const TestTask = new TaskModel({title:req.body.new_task_title, category:req.body.new_task_category, complete: CompleteStatusEnum.incomplete});
-    taskSave(TestTask);
+    taskSave(TestTask, res);
     // TestTask.save(function (err, TestTask) {
     //     if (err) return console.error(err);
     //     console.log("Task: "+ TestTask.title + " added.");
